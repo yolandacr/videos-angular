@@ -8,11 +8,15 @@ import { global } from './global';
 export class UserService{
 
     public url: string;
+    public identity;
+    public token;
 
     constructor(
         public _http: HttpClient
     ){
         this.url = global.url;
+        this.identity = '';
+        this.token = '';
     }
 
     prueba (){
@@ -39,5 +43,31 @@ export class UserService{
 
         return this._http.post(this.url+'login', params, {headers:headers});
 
+    }
+
+    getIdentity(){
+        let identity = JSON.parse(localStorage.getItem('identity') || '{}');
+        
+
+        if(identity && identity != 'undefined'){
+            this.identity = identity;
+        }else{
+            this.identity = '{}';
+        }
+
+        return this.identity;
+    }
+
+    getToken(){
+        let token = localStorage.getItem('token');
+        
+
+        if(token && token != 'undefined'){
+            this.token = token;
+        }else{
+            this.token = '';
+        }
+
+        return this.token;
     }
 }

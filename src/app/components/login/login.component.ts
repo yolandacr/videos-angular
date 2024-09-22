@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 
@@ -17,11 +18,17 @@ export class LoginComponent {
 
   constructor(
     private _userService: UserService,
+    private _router: Router,
+    private _route: ActivatedRoute,
   ){
     this.page_title = "Identifícate";
     this.user = new User(1,'','','','','ROLE_USER','');
     this.status = '';
     this.token = '';
+  }
+
+  ngOnInit(){
+    this.logout();
   }
 
   onSubmit(form: any){
@@ -39,6 +46,11 @@ export class LoginComponent {
 
                   console.log(this.identity);
                   console.log(this.token);
+
+                  localStorage.setItem('token', this.token);
+                  localStorage.setItem('identity', JSON.stringify(this.identity));
+
+                  this._router.navigate(['/inicio']);
                 }else{
                   this.status = 'error';
                 }
@@ -57,5 +69,25 @@ export class LoginComponent {
         console.log(error);
       }
     );
+  }
+
+  logout(){
+    this._route.params.subscribe(params => {
+      let sure = +params['sure'];
+
+      if(sure == 1){
+        localStorage.removeItem('identity');
+        localStorage.removeItem('token');
+
+        this.identity = null;
+        this.token = '';
+
+        console.log(this.identity);
+
+        this._router.navigate(['/inicio'])
+      }
+    }
+
+    )
   }
 }
