@@ -2,6 +2,9 @@
     <h1>{{page_title}}</h1>
     <hr>
 
+    <div class="alert alert-success col-md-5 mt-3" *ngIf="status=='success'"> Te has registrado correctamente, <a [routerLink]="['/login']">Identifícate aquí</a></div>
+    <div class="alert alert-danger col-md-5 mt-3" *ngIf="status == 'error'"> No te has podido registrar correctamente</div>
+
     <form class="col-md-5 ml-0 pl-0" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
         <div class="form-group">
             <label for="name">Nombre</label>
@@ -27,7 +30,7 @@
             <small *ngIf="!password.valid && password.touched" class="invalid-feedback d-block">La contraseña no puede estar vacía</small>
         </div>
 
-        <input type="submit" value="Regístrame" class="btn btn-success" [disabled]="registerForm.invalid">
+        <input type="submit" value="Regístrame" class="btn btn-success mt-3" [disabled]="registerForm.invalid">
 
     </form>
 </div>
