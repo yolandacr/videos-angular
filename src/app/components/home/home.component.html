@@ -1,4 +1,15 @@
-<div class="col-md-12 mt-3">
+<div class="col-md-12 mt-3" *ngIf="identity">
     <h1>{{page_title}}</h1>
     <hr>
+</div>
+
+<div class="col-md-12 mt-3" *ngIf="!identity">
+    <div class="jumbotron">
+        <h1 class="display-4">¡Bienvenido a Favovideos!</h1>
+        <p class="lead">Regístrate en la web para guardar tus vídeos favoritos de youtube y verlos cuando quieras.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <a class="btn btn-primary btn-lg" [routerLink]="['/login']" role="button">Identifícate</a>
+        <a class="btn btn-success btn-lg ms-3" [routerLink]="['/register']" role="button">Regístrate</a>
+    </div>
 </div>

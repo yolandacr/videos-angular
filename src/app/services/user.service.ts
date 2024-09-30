@@ -8,7 +8,7 @@ import { global } from './global';
 export class UserService{
 
     public url: string;
-    public identity;
+    public identity: any;
     public token;
 
     constructor(
@@ -26,7 +26,6 @@ export class UserService{
     register(user:any):Observable<any>{
         let json = JSON.stringify(user);
         let params = 'json='+json;
-
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
         return this._http.post(this.url+'register', params, {headers:headers});
@@ -45,18 +44,28 @@ export class UserService{
 
     }
 
-    getIdentity(){
+    update(token: any, user: any):Observable<any>{
+        let json = JSON.stringify(user);
+        let params = 'json='+json;
+
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+                                       .set('Authorization', token);
+
+        return this._http.put(this.url+'user/edit', params, {headers:headers});
+    }
+
+    getIdentity() {
         let identity = JSON.parse(localStorage.getItem('identity') || '{}');
         
-
-        if(identity && identity != 'undefined'){
+        if (identity && Object.keys(identity).length > 0) {
             this.identity = identity;
-        }else{
-            this.identity = '{}';
+        } else {
+            this.identity = null;
         }
-
+    
         return this.identity;
     }
+    
 
     getToken(){
         let token = localStorage.getItem('token');
