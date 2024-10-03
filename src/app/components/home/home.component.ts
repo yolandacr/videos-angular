@@ -36,7 +36,10 @@ export class HomeComponent {
   ngOnInit() {
     this.identity = this._userService.getIdentity();
     this.loadUser();
- 
+    this.actualPageVideos();
+  }
+
+  actualPageVideos(){
     this._route.params.subscribe(params => {
       var page = +params['page']
 
@@ -46,11 +49,7 @@ export class HomeComponent {
         this.next_page = 2;
       }
       this.getVideos(page);
-    }
-
-    )
- 
-   
+    })
   }
 
   loadUser(){
@@ -99,7 +98,6 @@ export class HomeComponent {
       return defaultImage;
     }
   
-    // Expresiones regulares para capturar el ID de YouTube
     const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
   
@@ -107,8 +105,20 @@ export class HomeComponent {
       const videoId = match[2];
       return `https://img.youtube.com/vi/${videoId}/${size}.jpg`;
     } else {
-      return defaultImage; // Si no es una URL válida de YouTube, retorna la imagen por defecto
+      return defaultImage;
     }
+  }
+
+  deleteVideo(id: number){
+    this._videoService.delete(this.token, id).subscribe(
+      response => {
+        this.actualPageVideos();
+      },
+
+      error => {
+        console.log(error);
+      }
+    )
   }
   
   

@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ErrorComponent } from './components/error/error.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { VideoNewComponent } from './components/video-new/video-new.component';
+import { VideoEditComponent } from './components/video-edit/video-edit.component';
 import { AppModule } from './app.module';
 import { IdentityGuard } from './services/identity.guard';
 
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path: 'ajustes', component: UserEditComponent, canActivate: [IdentityGuard]},
     {path: 'guardar-favorito', component: VideoNewComponent, canActivate: [IdentityGuard]},
+    {path: 'editar-favorito/:id', component: VideoEditComponent, canActivate: [IdentityGuard]},
     {path: 'error', component: ErrorComponent},
     {path: '**', component: ErrorComponent},
 ];

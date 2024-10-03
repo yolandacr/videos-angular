@@ -15,8 +15,34 @@
 
                 <div class="video-buttons mt-3">
                     <a href="#" class="btn btn-success me-2">Leer</a>
-                    <a href="#" class="btn btn-warning me-2">Editar</a>
-                    <a href="#" class="btn btn-danger">Borrar</a>
+                    <a [routerLink]="['/editar-favorito', video.id]" class="btn btn-warning me-2">Editar</a>
+                    
+                    <button type="button" class="btn btn-danger" 
+                            data-bs-toggle="modal" 
+                            [attr.data-bs-target]="'#borrar' + video.id">
+                        Borrar
+                    </button>
+
+                    <!-- modal -->
+                    <div class="modal fade" tabindex="-1" id="{{'borrar' + video.id}}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">¿Estás seguro de que deseas borrar este video?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Vas a borrar para siempre el video: {{video.title}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
+                                    <a (click)="deleteVideo(video.id)" class="btn btn-danger" data-bs-dismiss="modal">Borrar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
           </div>
@@ -29,7 +55,7 @@
                 <a class="page-link" [routerLink]="['/inicio', prev_page]">Anterior</a>
             </li>
             <li class="page-item" *ngFor="let num of number_pages">
-                <a class="page-link" [routerLink]="['/inicio', num]">{{num+1}}</a>
+                <a class="page-link" [routerLink]="['/inicio', num + 1]">{{num+1}}</a>
             </li>
             <li class="page-item">
                 <a class="page-link" [routerLink]="['/inicio', next_page]">Siguiente</a>
